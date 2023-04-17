@@ -5,4 +5,3 @@ def dcrypt(encMessage, key):
     fernet = Fernet(storedkey)
     decMessage = fernet.decrypt(encMessage).decode()
     return decMessage
-

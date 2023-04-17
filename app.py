@@ -6,52 +6,27 @@ app = Flask(__name__)
 
 @app.route('/encrypt', methods=["POST"])
 def Encrypt():
-    value0 = str(request.form['activity'])
-    if(value0 == "register"):
-        valuer1 = str(request.form['password'])
-        valuer2 = str(request.form['nfcpassword'])
-        a = ncrypt(valuer1)
-        e = ncrypt(valuer2)
+        raw_value = str(request.form['raw_value'])
+        encrypted_value = ncrypt(raw_value)
         data = {
-            "password" : f"{a}",
-            "nfcpassword" : f"{e}",
-            "key" : f"{key}",
+            "encrypted_value" : f"{encrypted_value}",
+            "key" : f"{key.decode()}",
             }
 
         return jsonify(data)
-        
-    elif(value0 == "nfcreset"):
-        valuen1 = str(request.form['newnfcpassword'])
-        b = ncrypt(valuen1)
-        data1 = {
-            "newnfcpassword" : f"{b}",
-            "key" : f"{key}",
-            }
-
-        return jsonify(data1)
-
-    elif(value0 == "userpassreset"):
-        valueu1 = str(request.form['newuserpassword'])
-        c = ncrypt(valueu1)
-        data2 = {
-            "newuserpassword" : f"{c}",
-            "key" : f"{key}",
-            }
-
-        return jsonify(data2)
 
 
 
 @app.route('/dcrypt', methods=["POST"])
 #This is for login so this will take password decrypt it and return it
 def Decrypt(): 
-        valuel1 = str(request.form['password'])
-        key = str(request.form['enckey'])
-        key_bytes = bytes(key, 'ascii')
-        c = bytes(valuel1, 'ascii')
-        d = dcrypt(c, key)
-        data3 = {
-            "password" : f"{d}",
+        value = str(request.form['encrytped_value'])
+        key = str(request.form['key'])
+        key_in_bytes = value.encode()
+        value_in_bytes = value.encode()
+        decrypted_value = dcrypt(value_in_bytes, key_in_bytes)
+        data = {
+            "decrypted_value" : f"{decrypted_value}",
             }
 
-        return jsonify(data3)
+        return jsonify(data)
