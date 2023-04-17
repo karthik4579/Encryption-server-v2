@@ -17,7 +17,7 @@ def Encrypt():
 
 
 
-@app.route('/dcrypt', methods=["POST"])
+@app.route('/decrypt', methods=["POST"])
 #This is for login so this will take password decrypt it and return it
 def Decrypt(): 
         value = str(request.form['encrytped_value'])
